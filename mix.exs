@@ -1,6 +1,6 @@
 defmodule Mix.Tasks.Compile.MakeBindings do
   def run(_) do
-    {_, exit_code} = System.cmd("make", [], into: IO.stream(:stdio, :line))
+    {_, exit_code} = System.cmd("gmake", [], into: IO.stream(:stdio, :line))
 
     case exit_code do
       0 -> :ok
