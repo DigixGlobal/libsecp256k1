@@ -1,6 +1,15 @@
 defmodule Mix.Tasks.Compile.MakeBindings do
   def run(_) do
-    {_, exit_code} = System.cmd("gmake", [], into: IO.stream(:stdio, :line))
+    command =
+      case :os.type() do
+        {:unix, type} when type in [:freebsd, :openbsd] ->
+          "gmake"
+
+        _ ->
+          "make"
+      end
+
+    {_, exit_code} = System.cmd(command, [], into: IO.stream(:stdio, :line))
 
     case exit_code do
       0 -> :ok
